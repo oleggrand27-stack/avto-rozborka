@@ -108,7 +108,10 @@ def get_chat_id(state):
     cid = os.environ.get("TELEGRAM_CHAT_ID") or state.get("chat_id")
     if cid:
         return cid
-    for upd in reversed(tg("getUpdates").get("result", [])):
+    me = tg("getMe").get("result", {})
+    updates = tg("getUpdates").get("result", [])
+    print(f"Telegram бот: @{me.get('username')}, оновлень: {len(updates)}")
+    for upd in reversed(updates):
         chat = (upd.get("message") or {}).get("chat") or {}
         if chat.get("type") == "private":
             state["chat_id"] = chat["id"]
