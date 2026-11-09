@@ -165,7 +165,14 @@ def main():
             continue
         new = [i for i in ids if i not in seen]
         seen.update(new)
+        print(f"{label}: знайдено {len(ids)}, нових {len(new)}")
         if first_run:
+            if ids and not state.get("debug_done"):
+                info = ria("/info", {"auto_id": ids[0]})
+                print("DEBUG info keys:", sorted(info.keys()))
+                print("DEBUG autoData keys:", sorted((info.get("autoData") or {}).keys()))
+                print("DEBUG sample:", json.dumps({k: info.get(k) for k in ("title", "USD", "linkToView", "locationCityName")}, ensure_ascii=False))
+                state["debug_done"] = True
             continue  # перший запуск лише запам'ятовує наявні оголошення
         for ad_id in new:
             try:
