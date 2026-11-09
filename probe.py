@@ -18,7 +18,7 @@ def search(label, q):
 def title(i):
     d = get("/info", f"auto_id={i}")
     print("   ->", d.get("markName"), d.get("modelName"), d.get("autoData", {}).get("year"), "| technicalCondition:", json.dumps(d.get("technicalCondition"), ensure_ascii=False)[:300])
-lit = "category_id=1&marka_id[0]=29&model_id[0]=293"
-for extra in ("technical_condition=3", "technical_condition[0]=3", "technical_condition[0]=4",
-              "technicalCondition[0]=3", "technical_condition_id[0]=3", "crashed=1", "damage=0"):
+lit = "category_id=1&marka_id[0]=29&model_id[0]=293&order_by=7"
+for extra in ("damage=2", "damage=0", "damage=1"):
     i = search(f"literal+{extra}", f"{lit}&{extra}")
+    if i: title(i[0])
