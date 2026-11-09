@@ -1,18 +1,140 @@
 {
   "comment": "Список моделей для пошуку на AUTO.RIA. year_from = рік від (null = будь-який). Регіон: вся Україна.",
   "searches": [
-    {"make": "Hyundai", "models": ["Santa FE"], "year_from": 2015},
-    {"make": "Kia", "models": ["Sorento", "Sportage"], "year_from": 2015},
-    {"make": "Chevrolet", "models": ["Bolt EV", "Bolt EUV"], "year_from": null},
-    {"make": "Kia", "models": ["Niro"], "year_from": null},
-    {"make": "Hyundai", "models": ["Kona Electric", "Ioniq Electric", "Ioniq 9", "Ioniq 5 N", "Kona", "Ioniq 5 XRT", "Ioniq", "Ioniq 6", "Ioniq 5"], "year_from": null},
-    {"make": "Hyundai", "models": ["Elantra"], "year_from": 2014},
-    {"make": "Hyundai", "models": ["Accent"], "year_from": 2011},
-    {"make": "Peugeot", "models": ["301"], "year_from": null},
-    {"make": "Renault", "models": ["Scenic E-Tech", "Megane E-Tech Electric", "Zoe", "Megane Scenic", "Scenic XMOD", "Megane", "Grand Scenic", "Scenic"], "year_from": 2010},
-    {"make": "Dacia", "models": ["Logan", "Logan MCV Stepway", "Logan MCV", "Sandero StepWay", "Sandero", "Lodgy", "Dokker Stepway", "Dokker", "Lodgy Stepway", "Duster"], "year_from": null},
-    {"make": "Renault", "models": ["Sandero StepWay", "Sandero", "Logan", "Logan MCV Stepway", "Logan MCV", "Logan Stepway", "Dokker Stepway", "Duster", "Duster Oroch", "Lodgy", "Dokker"], "year_from": null}
+    {
+      "make": "Hyundai",
+      "models": [
+        "Santa FE"
+      ],
+      "year_from": 2015
+    },
+    {
+      "make": "Kia",
+      "models": [
+        "Sorento",
+        "Sportage"
+      ],
+      "year_from": 2015
+    },
+    {
+      "make": "Chevrolet",
+      "models": [
+        "Bolt EV",
+        "Bolt EUV"
+      ],
+      "year_from": null
+    },
+    {
+      "make": "Kia",
+      "models": [
+        "Niro"
+      ],
+      "year_from": null
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Kona Electric",
+        "Ioniq Electric",
+        "Ioniq 9",
+        "Ioniq 5 N",
+        "Kona",
+        "Ioniq 5 XRT",
+        "Ioniq",
+        "Ioniq 6",
+        "Ioniq 5"
+      ],
+      "year_from": null
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Elantra"
+      ],
+      "year_from": 2014
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Accent"
+      ],
+      "year_from": 2011
+    },
+    {
+      "make": "Peugeot",
+      "models": [
+        "301"
+      ],
+      "year_from": null
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Scenic E-Tech",
+        "Megane E-Tech Electric",
+        "Zoe",
+        "Megane Scenic",
+        "Scenic XMOD",
+        "Megane",
+        "Grand Scenic",
+        "Scenic"
+      ],
+      "year_from": 2010
+    },
+    {
+      "make": "Dacia",
+      "models": [
+        "Logan",
+        "Logan MCV Stepway",
+        "Logan MCV",
+        "Sandero StepWay",
+        "Sandero",
+        "Lodgy",
+        "Dokker Stepway",
+        "Dokker",
+        "Lodgy Stepway",
+        "Duster"
+      ],
+      "year_from": null
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Sandero StepWay",
+        "Sandero",
+        "Logan",
+        "Logan MCV Stepway",
+        "Logan MCV",
+        "Logan Stepway",
+        "Dokker Stepway",
+        "Duster",
+        "Duster Oroch",
+        "Lodgy",
+        "Dokker"
+      ],
+      "year_from": null
+    }
   ],
   "search_params": {},
-  "keywords": ["розбір", "розбiр", "разбор", "запчаст", "на з/ч", "не на ходу", "не на ходу", "після дтп", "после дтп", "битий", "бита", "бите", "пошкодж", "повреж", "утопл", "горіл", "горел", "тотал"]
+  "keywords": [
+    "розбір",
+    "розбiр",
+    "разбор",
+    "запчаст",
+    "на з/ч",
+    "не на ходу",
+    "не на ходу",
+    "після дтп",
+    "после дтп",
+    "битий",
+    "бита",
+    "бите",
+    "пошкодж",
+    "повреж",
+    "утопл",
+    "горіл",
+    "горел",
+    "тотал"
+  ],
+  "olx_only_keywords": true
 }
