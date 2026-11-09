@@ -22,7 +22,7 @@ TG = "https://api.telegram.org/bot{token}/{method}"
 
 RIA_KEY = os.environ.get("RIA_API_KEY", "")
 TG_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-REQUEST_PAUSE = 0.4  # секунди між запитами, щоб не перевищити ліміт API
+REQUEST_PAUSE = 2  # секунди між запитами, щоб не перевищити ліміт API
 
 
 def http_json(url, params=None, data=None):
@@ -83,14 +83,18 @@ def resolve_ids(config, state):
     return pairs
 
 
-def search_ids(marka_id, model_id, year_from, extra):
-    params = [("category_id", 1), ("marka_id[0]", marka_id), ("model_id[0]", model_id),
-              ("countpage", 100)]
-    if year_from:
-        params.append(("s_yers[0]", year_from))
+def search_all(pairs, extra):
+    """Один запит на всі моделі: нові оголошення першими (order_by=7)."""
+    params = [("category_id", 1), ("countpage", 100), ("order_by", 7)]
+    for i, (marka_id, model_id, year_from, _label) in enumerate(pairs):
+        params += [(f"marka_id[{i}]", marka_id), (f"model_id[{i}]", model_id)]
+        if year_from:
+            params.append((f"s_yers[{i}]", year_from))
     params += list(extra.items())
     data = ria("/search", params)
-    return [str(i) for i in data.get("result", {}).get("search_result", {}).get("ids", [])]
+    sr = data.get("result", {}).get("search_result", {})
+    print(f"Всього знайдено на AUTO.RIA: {sr.get('count')}")
+    return [str(i) for i in sr.get("ids", [])]
 
 
 def looks_for_parts(info, keywords):
@@ -159,41 +163,23 @@ def main():
         sys.exit("Бот ще не знає ваш чат: відкрийте бота в Telegram і натисніть Start.")
 
     pairs = resolve_ids(config, state)
+    ids = search_all(pairs, extra)
+    new = [i for i in ids if i not in seen]
+    seen.update(new)
+    print(f"Нових: {len(new)}")
     sent = 0
-    for marka_id, model_id, year_from, label in pairs:
-        try:
-            ids = search_ids(marka_id, model_id, year_from, extra)
-        except Exception as e:  # одна модель не повинна зупиняти решту
-            print(f"! Помилка пошуку {label}: {e}")
-            continue
-        new = [i for i in ids if i not in seen]
-        seen.update(new)
-        print(f"{label}: знайдено {len(ids)}, нових {len(new)}")
-        if first_run:
-            if ids and not state.get("debug_done"):
-                info = ria("/info", {"auto_id": ids[0]})
-                print("DEBUG info keys:", sorted(info.keys()))
-                print("DEBUG autoData keys:", sorted((info.get("autoData") or {}).keys()))
-                print("DEBUG sample:", json.dumps({k: info.get(k) for k in ("title", "USD", "linkToView", "locationCityName")}, ensure_ascii=False))
-                state["debug_done"] = True
-            continue  # перший запуск лише запам'ятовує наявні оголошення
-        for ad_id in new:
-            try:
-                info = ria("/info", {"auto_id": ad_id})
-            except Exception as e:
-                print(f"! Помилка оголошення {ad_id}: {e}")
-                continue
-            hits = looks_for_parts(info, keywords)
-            if hits or extra:
-                notify(chat_id, info, label, hits)
-                sent += 1
+    if not first_run:
+        for ad_id in reversed(new):  # від старіших до новіших
+            link = f"https://auto.ria.com/uk/auto___{ad_id}.html"
+            tg("sendMessage", chat_id=chat_id, text=f"🚗 Нове авто з пошкодженнями на AUTO.RIA\n{link}")
+            sent += 1
 
     state["seen"] = sorted(seen)
     save_state(state)
     if first_run:
         tg("sendMessage", chat_id=chat_id,
-           text=f"✅ Бот запущено. Запам'ятав {len(seen)} наявних оголошень, далі надсилатиму лише нові авто під розбірку.")
-    print(f"Перевірено моделей: {len(pairs)}, надіслано: {sent}, всього бачених: {len(seen)}")
+           text=f"✅ Бот запущено. Запам'ятав {len(seen)} наявних оголошень, далі надсилатиму лише нові авто з пошкодженнями (після ДТП, не на ходу).")
+    print(f"Моделей у пошуку: {len(pairs)}, надіслано: {sent}, всього бачених: {len(seen)}")
 
 
 if __name__ == "__main__":

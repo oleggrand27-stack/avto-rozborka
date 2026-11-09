@@ -115,7 +115,9 @@
       "year_from": null
     }
   ],
-  "search_params": {},
+  "search_params": {
+    "damage": "2"
+  },
   "keywords": [
     "розбір",
     "розбiр",
