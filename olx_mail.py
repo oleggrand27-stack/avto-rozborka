@@ -72,6 +72,27 @@ def extract_ads(body):
     return ads
 
 
+SEARCH_RE = re.compile(r"/q-([^/]+)/")
+DROP_PARAMS = {"bs", "utm_source", "utm_medium", "utm_campaign"}
+
+
+def extract_searches(body):
+    """Лист-дайджест OLX: [(запит, кількість нових, посилання)]."""
+    found = []
+    for m in re.finditer(r"<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", body, flags=re.S | re.I):
+        url = html.unescape(m.group(1))
+        q = SEARCH_RE.search(url)
+        text = " ".join(html.unescape(re.sub(r"<[^>]+>", " ", m.group(2))).split())
+        count = re.search(r"\((\d+)\)", text)
+        if not q or "olx.ua" not in url:
+            continue
+        parts = urllib.parse.urlparse(url)
+        params = [(k, v) for k, v in urllib.parse.parse_qsl(parts.query) if k not in DROP_PARAMS]
+        clean = urllib.parse.urlunparse(parts._replace(query=urllib.parse.urlencode(params)))
+        found.append((urllib.parse.unquote(q.group(1)), int(count.group(1)) if count else None, clean))
+    return found
+
+
 def main():
     user, password = os.environ.get("GMAIL_ADDRESS"), os.environ.get("GMAIL_APP_PASSWORD", "").replace(" ", "")
     if not user or not password:
@@ -105,8 +126,19 @@ def main():
             continue
         seen_msgs.add(mid)
         subject = decode(msg.get("Subject"))
-        ads = extract_ads(html_part(msg))
-        print(f"Лист: {subject[:80]!r}, оголошень: {len(ads)}")
+        body = html_part(msg)
+        ads = extract_ads(body)
+        searches = extract_searches(body)
+        print(f"Лист: {subject[:80]!r}, оголошень: {len(ads)}, пошуків: {len(searches)}")
+        for query, count, url in searches:
+            if first_run:
+                continue
+            hits = [k for k in keywords if checker.norm(k) in checker.norm(query)]
+            if only_keywords and not hits:
+                continue
+            checker.tg("sendMessage", chat_id=chat_id,
+                       text=f"🟢 OLX: нові оголошення за пошуком «{query}»" + (f" ({count})" if count else "") + f"\n{url}")
+            sent += 1
         for ad_id, (title, url) in ads.items():
             if ad_id in seen_ads:
                 continue
