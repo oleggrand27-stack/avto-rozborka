@@ -180,6 +180,13 @@ def matches(ad, m, only_cities, min_price=0):
         text = d["vol"] or ad["sub"]
         if text and not re.search(m["engine"], text):
             return False
+    if m.get("kwh_min") and d.get("kwh") and float(d["kwh"].replace(",", ".")) < m["kwh_min"]:
+        return False
+    rng = re.match(r"(\d+)", d.get("range") or "")
+    if m.get("range_min_km") and rng and int(rng.group(1)) < m["range_min_km"]:
+        return False
+    if m.get("sub_exclude") and re.search(m["sub_exclude"], ad["sub"]):
+        return False
     if only_cities and not any(c.lower() in d["city"].lower() for c in only_cities):
         return False
     return True

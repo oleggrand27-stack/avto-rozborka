@@ -246,17 +246,20 @@
       "note": "Львів: Комфорт Uklon + Bolt"
     },
     {
-      "name": "Nissan Leaf",
+      "name": "Nissan Leaf (ZE1, 40+ кВт·год)",
       "brand_id": 55,
       "model_ids": [
         36565
       ],
-      "year_from": 2016,
+      "year_from": 2017,
       "price_max": 9000,
       "fuels": [
         "Електро"
       ],
-      "note": "2016–17: Комфорт лише в Bolt; 2018+: Uklon + Bolt"
+      "note": "Нове покоління ZE1 (40/62 кВт·год). Uklon + Bolt Комфорт з 2018",
+      "kwh_min": 38,
+      "range_min_km": 200,
+      "sub_exclude": "(^|[^I])I покоління|ZE0|AZE0|24 кВт|30 кВт"
     },
     {
       "name": "Renault Zoe",
