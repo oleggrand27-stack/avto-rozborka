@@ -36,9 +36,15 @@ def http_json(url, params=None, data=None):
 
 
 def ria(path, params=None):
-    time.sleep(REQUEST_PAUSE)
     p = [("api_key", RIA_KEY)] + list((params or {}).items() if isinstance(params, dict) else params or [])
-    return http_json(RIA + path, p)
+    for attempt in range(4):
+        time.sleep(REQUEST_PAUSE if attempt == 0 else 60)
+        try:
+            return http_json(RIA + path, p)
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == 3:
+                raise
+            print("AUTO.RIA: забагато запитів, чекаю хвилину")
 
 
 def norm(s):
