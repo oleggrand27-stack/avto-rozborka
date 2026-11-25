@@ -193,7 +193,7 @@
       "year_from": 2015,
       "year_to": null,
       "price_max": 5000,
-      "note": "з попереднього списку"
+      "note": "за погодженням 2026-11-25"
     },
     {
       "make": "Kia",
@@ -204,7 +204,7 @@
       "year_from": 2015,
       "year_to": null,
       "price_max": 5000,
-      "note": "з попереднього списку"
+      "note": "за погодженням 2026-11-25"
     },
     {
       "make": "Hyundai",
@@ -220,7 +220,7 @@
       "year_from": null,
       "year_to": null,
       "price_max": 5000,
-      "note": "з попереднього списку"
+      "note": "за погодженням 2026-11-25"
     },
     {
       "make": "Peugeot",
@@ -229,8 +229,8 @@
       ],
       "year_from": null,
       "year_to": null,
-      "price_max": 5000,
-      "note": "з попереднього списку"
+      "price_max": 3500,
+      "note": "за погодженням 2026-11-25"
     },
     {
       "make": "Renault",
@@ -245,8 +245,8 @@
       ],
       "year_from": 2010,
       "year_to": null,
-      "price_max": 5000,
-      "note": "з попереднього списку"
+      "price_max": 3500,
+      "note": "за погодженням 2026-11-25"
     }
   ],
   "search_params": {
