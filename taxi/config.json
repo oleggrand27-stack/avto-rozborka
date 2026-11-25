@@ -1,0 +1,274 @@
+{
+  "comment": "Моделі для таксі (клас Комфорт, Львів). Ціна в $, роки включно. fuels — дозволене пальне, engine — регулярний вираз для об'єму двигуна.",
+  "pages_per_model": 1,
+  "pause_between_requests_sec": 2,
+  "only_cities": [],
+  "notify_price_drops": true,
+  "max_messages_per_run": 30,
+  "models": [
+    {
+      "name": "Renault Megane 3 (1.6)",
+      "brand_id": 62,
+      "model_ids": [
+        586
+      ],
+      "year_from": 2010,
+      "year_to": 2016,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "engine": "1[.,](6|59)",
+      "note": "Під розбірку. Львів: Комфорт лише 2014–2015"
+    },
+    {
+      "name": "Hyundai Elantra 2.0",
+      "brand_id": 29,
+      "model_ids": [
+        3086
+      ],
+      "year_from": 2016,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "engine": "^(2|2[.,]0+|1[.,]99\\d*)$|(^|\\s)2[.,]0\\b",
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Hyundai Avante",
+      "brand_id": 29,
+      "model_ids": [
+        2386
+      ],
+      "year_from": 2016,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Kia Forte / Cerato / K3",
+      "brand_id": 33,
+      "model_ids": [
+        49491,
+        1311,
+        60866
+      ],
+      "year_from": 2016,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Toyota Corolla",
+      "brand_id": 79,
+      "model_ids": [
+        702
+      ],
+      "year_from": 2013,
+      "price_max": 10000,
+      "fuels": [
+        "Бензин",
+        "Газ",
+        "Гібрид"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Toyota Avensis",
+      "brand_id": 79,
+      "model_ids": [
+        696
+      ],
+      "year_from": 2013,
+      "price_max": 10000,
+      "fuels": [
+        "Бензин",
+        "Газ",
+        "Гібрид"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Toyota Auris",
+      "brand_id": 79,
+      "model_ids": [
+        2040
+      ],
+      "year_from": 2015,
+      "price_max": 10000,
+      "fuels": [
+        "Бензин",
+        "Газ",
+        "Гібрид"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Hyundai Sonata LF (газ)",
+      "brand_id": 29,
+      "model_ids": [
+        295
+      ],
+      "year_from": 2015,
+      "year_to": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Газ"
+      ],
+      "note": "Перевірити, що це LF, а не YF. Львів: Комфорт (2017 — Бізнес)"
+    },
+    {
+      "name": "Kia K5 / Optima (газ)",
+      "brand_id": 33,
+      "model_ids": [
+        58260,
+        1840
+      ],
+      "year_from": 2015,
+      "year_to": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Газ"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Skoda Octavia 1.6",
+      "brand_id": 70,
+      "model_ids": [
+        652
+      ],
+      "year_from": 2015,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "engine": "1[.,](6|59)",
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "VW Jetta",
+      "brand_id": 84,
+      "model_ids": [
+        785
+      ],
+      "year_from": 2015,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Peugeot 301",
+      "brand_id": 58,
+      "model_ids": [
+        40472
+      ],
+      "year_from": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "note": "Львів: Комфорт лише в Bolt (Uklon — Стандарт)"
+    },
+    {
+      "name": "Citroen C-Elysee 1.6",
+      "brand_id": 15,
+      "model_ids": [
+        40442
+      ],
+      "year_from": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "engine": "1[.,](6|59)",
+      "note": "Львів: Комфорт лише в Bolt (Uklon — Стандарт)"
+    },
+    {
+      "name": "Hyundai Ioniq (гібрид / електро)",
+      "brand_id": 29,
+      "model_ids": [
+        50018,
+        63115
+      ],
+      "year_from": 2016,
+      "price_max": 10000,
+      "fuels": [
+        "Гібрид",
+        "Електро"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Kia Niro (гібрид / електро)",
+      "brand_id": 33,
+      "model_ids": [
+        50175,
+        70502
+      ],
+      "year_from": 2016,
+      "price_max": 10000,
+      "fuels": [
+        "Гібрид",
+        "Електро"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Toyota Prius 2016+",
+      "brand_id": 79,
+      "model_ids": [
+        714,
+        62022,
+        59623
+      ],
+      "year_from": 2016,
+      "price_max": 10000,
+      "fuels": [
+        "Гібрид"
+      ],
+      "note": "Львів: Комфорт Uklon + Bolt"
+    },
+    {
+      "name": "Nissan Leaf",
+      "brand_id": 55,
+      "model_ids": [
+        36565
+      ],
+      "year_from": 2016,
+      "price_max": 9000,
+      "fuels": [
+        "Електро"
+      ],
+      "note": "2016–17: Комфорт лише в Bolt; 2018+: Uklon + Bolt"
+    },
+    {
+      "name": "Renault Zoe",
+      "brand_id": 62,
+      "model_ids": [
+        42148
+      ],
+      "year_from": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Електро"
+      ],
+      "note": "Комфорт не проходить. Перевірити ZE40 і що батарея не в оренді"
+    }
+  ]
+}
