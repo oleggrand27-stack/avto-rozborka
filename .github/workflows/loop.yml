@@ -31,14 +31,17 @@ jobs:
           end=$(( $(date +%s) + 340*60 ))
           last_check=0
           while [ "$(date +%s)" -lt "$end" ]; do
+            start=$(date +%s)
+            # боти ділять одну чергу (state-commit), тож запускаємо їх по черзі
             gh workflow run taxi.yml --ref main || echo "taxi: не вдалося запустити"
+            sleep 240
             gh workflow run olx.yml --ref main || echo "olx: не вдалося запустити"
-            now=$(date +%s)
-            if [ $(( now - last_check )) -ge 7200 ]; then
+            if [ $(( start - last_check )) -ge 7000 ]; then
+              sleep 150
               gh workflow run check.yml --ref main || echo "check: не вдалося запустити"
-              last_check=$now
+              last_check=$start
             fi
-            sleep 1200
+            sleep $(( 1200 - ( $(date +%s) - start ) ))
           done
       - name: Перезапустити таймер
         if: success()
