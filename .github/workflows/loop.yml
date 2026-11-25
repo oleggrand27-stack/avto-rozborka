@@ -1,0 +1,48 @@
+name: Таймер (запуск ботів)
+
+# Розклад GitHub (schedule) часто пропускає запуски на години.
+# Цей таймер працює ~5 год 40 хв і сам запускає ботів:
+# таксі та OLX кожні 20 хв, розбірку AUTO.RIA кожні 2 год.
+# Потім перезапускає сам себе. Розклад нижче — лише запасний старт.
+# Щоб зупинити: Actions -> «Таймер (запуск ботів)» -> Disable workflow.
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: timer
+  cancel-in-progress: false
+
+jobs:
+  timer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - name: Запускати ботів
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          end=$(( $(date +%s) + 340*60 ))
+          last_check=0
+          while [ "$(date +%s)" -lt "$end" ]; do
+            gh workflow run taxi.yml --ref main || echo "taxi: не вдалося запустити"
+            gh workflow run olx.yml --ref main || echo "olx: не вдалося запустити"
+            now=$(date +%s)
+            if [ $(( now - last_check )) -ge 7200 ]; then
+              gh workflow run check.yml --ref main || echo "check: не вдалося запустити"
+              last_check=$now
+            fi
+            sleep 1200
+          done
+      - name: Перезапустити таймер
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run loop.yml --ref main

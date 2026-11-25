@@ -234,6 +234,10 @@ def main():
     state = load_json(STATE_PATH, {})
     seen = state.setdefault("seen", {})  # id -> остання ціна ($), 0 = не підходить
     first_run = not seen
+    # Нова модель у config.json або більше сторінок пошуку — спершу тихо запам'ятати
+    # наявні оголошення, щоб не надіслати старі як нові.
+    known = state.setdefault("models", {})
+    pages = cfg.get("pages_per_model", 1)
     if not TEST and (not os.environ.get("TELEGRAM_BOT_TOKEN") or not chat_ids()):
         sys.exit("Немає TELEGRAM_BOT_TOKEN або chat id")
 
@@ -259,6 +263,7 @@ def main():
             except Exception as ex2:
                 errors.append(f"{m['name']}: API — {ex2}")
                 continue
+        quiet = first_run or known.get(m["name"], 0) < pages
         good = [a for a in ads if matches(a, m, only, cfg.get("min_price", 0))]
         print(f"{m['name']}: {src}, карток {len(ads)}, підходить {len(good)}")
         if TEST:
@@ -272,11 +277,13 @@ def main():
         for a in good:
             old = seen.get(a["id"])
             if old is None:
-                if not first_run:
+                if not quiet:
                     queue.append((a, m, None))
             elif old and cfg.get("notify_price_drops", True) and a["usd"] < old:
                 queue.append((a, m, old))
             seen[a["id"]] = a["usd"]
+        if src == "сайт":
+            known[m["name"]] = pages
 
     if errors:
         print("Помилки:\n  " + "\n  ".join(errors))
