@@ -4,6 +4,7 @@
   "pause_between_requests_sec": 2,
   "only_cities": [],
   "notify_price_drops": true,
+  "min_price": 3500,
   "max_messages_per_run": 30,
   "models": [
     {

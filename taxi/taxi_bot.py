@@ -166,9 +166,9 @@ def fetch_api(m, seen, budget):
 
 
 # ---------- фільтр і повідомлення ----------
-def matches(ad, m, only_cities):
+def matches(ad, m, only_cities, min_price=0):
     d = ad["d"]
-    if not ad["usd"] or ad["usd"] > m["price_max"] or ad["year"] < m["year_from"]:
+    if ad["usd"] < min_price or ad["usd"] > m["price_max"] or ad["year"] < m["year_from"]:
         return False
     if m.get("year_to") and ad["year"] > m["year_to"]:
         return False
@@ -259,7 +259,7 @@ def main():
             except Exception as ex2:
                 errors.append(f"{m['name']}: API — {ex2}")
                 continue
-        good = [a for a in ads if matches(a, m, only)]
+        good = [a for a in ads if matches(a, m, only, cfg.get("min_price", 0))]
         print(f"{m['name']}: {src}, карток {len(ads)}, підходить {len(good)}")
         if TEST:
             for a in sorted(good, key=lambda x: x["usd"])[:3]:
