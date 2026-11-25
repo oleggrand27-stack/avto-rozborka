@@ -1,0 +1,37 @@
+name: Таксі (Комфорт, Львів)
+
+on:
+  schedule:
+    - cron: "3,23,43 * * * *"   # кожні 20 хвилин
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: state-commit
+  cancel-in-progress: false
+
+jobs:
+  taxi:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Перевірити AUTO.RIA для таксі
+        env:
+          RIA_API_KEY: ${{ secrets.RIA_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TAXI_CHAT_ID: ${{ secrets.TAXI_CHAT_ID }}
+        run: python taxi/taxi_bot.py
+      - name: Зберегти стан
+        if: always()
+        run: |
+          git config user.name "avto-rozborka-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add taxi/state.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Таксі: оновити стан" && git pull --rebase origin main && git push)
