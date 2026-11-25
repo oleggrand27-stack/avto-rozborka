@@ -1,20 +1,170 @@
 {
-  "comment": "Список моделей для пошуку на AUTO.RIA. year_from = рік від (null = будь-який). Регіон: вся Україна.",
+  "comment": "Список моделей для пошуку на AUTO.RIA. year_from / year_to = роки (null = будь-які), price_max = ціна до, $. Лише авто з пошкодженнями і лише в Україні (search_params). Регіон: вся Україна.",
   "searches": [
+    {
+      "make": "Dacia",
+      "models": [
+        "Logan",
+        "Logan MCV",
+        "Logan MCV Stepway"
+      ],
+      "year_from": null,
+      "year_to": 2012,
+      "price_max": 2000,
+      "note": "Logan 1 / MCV"
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Logan",
+        "Logan MCV",
+        "Logan MCV Stepway",
+        "MCV"
+      ],
+      "year_from": null,
+      "year_to": 2012,
+      "price_max": 2000,
+      "note": "Logan 1 / MCV"
+    },
+    {
+      "make": "Dacia",
+      "models": [
+        "Sandero",
+        "Sandero StepWay"
+      ],
+      "year_from": null,
+      "year_to": 2012,
+      "price_max": 2000,
+      "note": "Sandero 1"
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Sandero",
+        "Sandero StepWay"
+      ],
+      "year_from": null,
+      "year_to": 2012,
+      "price_max": 2000,
+      "note": "Sandero 1"
+    },
+    {
+      "make": "Dacia",
+      "models": [
+        "Logan",
+        "Logan MCV",
+        "Logan MCV Stepway",
+        "Sandero",
+        "Sandero StepWay"
+      ],
+      "year_from": 2013,
+      "year_to": null,
+      "price_max": 3000,
+      "note": "Logan 2 / Sandero 2 і новіші"
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Logan",
+        "Logan MCV",
+        "Logan MCV Stepway",
+        "Logan Stepway",
+        "Sandero",
+        "Sandero StepWay"
+      ],
+      "year_from": 2013,
+      "year_to": null,
+      "price_max": 3000,
+      "note": "Logan 2 / Sandero 2 і новіші"
+    },
+    {
+      "make": "Dacia",
+      "models": [
+        "Duster"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 3500
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Duster",
+        "Duster Oroch"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 3500
+    },
+    {
+      "make": "Dacia",
+      "models": [
+        "Lodgy",
+        "Lodgy Stepway",
+        "Dokker",
+        "Dokker Stepway"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 3000
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Lodgy",
+        "Dokker",
+        "Dokker Stepway"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 3000
+    },
     {
       "make": "Hyundai",
       "models": [
-        "Santa FE"
+        "Accent"
       ],
-      "year_from": 2015
+      "year_from": 2010,
+      "year_to": null,
+      "price_max": 3500
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Elantra"
+      ],
+      "year_from": 2015,
+      "year_to": null,
+      "price_max": 4000
+    },
+    {
+      "make": "Nissan",
+      "models": [
+        "Leaf"
+      ],
+      "year_from": 2017,
+      "year_to": null,
+      "price_max": 5000
+    },
+    {
+      "make": "Renault",
+      "models": [
+        "Zoe"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 4000
     },
     {
       "make": "Kia",
       "models": [
-        "Sorento",
-        "Sportage"
+        "Niro",
+        "E-Niro",
+        "Forte"
       ],
-      "year_from": 2015
+      "year_from": null,
+      "year_to": null,
+      "price_max": 5000
     },
     {
       "make": "Chevrolet",
@@ -22,102 +172,87 @@
         "Bolt EV",
         "Bolt EUV"
       ],
-      "year_from": null
+      "year_from": null,
+      "year_to": null,
+      "price_max": 5000
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Kona",
+        "Kona Electric"
+      ],
+      "year_from": null,
+      "year_to": null,
+      "price_max": 5000
+    },
+    {
+      "make": "Hyundai",
+      "models": [
+        "Santa FE"
+      ],
+      "year_from": 2015,
+      "year_to": null,
+      "price_max": 5000,
+      "note": "з попереднього списку"
     },
     {
       "make": "Kia",
       "models": [
-        "Niro"
+        "Sorento",
+        "Sportage"
       ],
-      "year_from": null
+      "year_from": 2015,
+      "year_to": null,
+      "price_max": 5000,
+      "note": "з попереднього списку"
     },
     {
       "make": "Hyundai",
       "models": [
-        "Kona Electric",
+        "Ioniq",
         "Ioniq Electric",
+        "Ioniq 5",
+        "Ioniq 6",
         "Ioniq 9",
         "Ioniq 5 N",
-        "Kona",
-        "Ioniq 5 XRT",
-        "Ioniq",
-        "Ioniq 6",
-        "Ioniq 5"
+        "Ioniq 5 XRT"
       ],
-      "year_from": null
-    },
-    {
-      "make": "Hyundai",
-      "models": [
-        "Elantra"
-      ],
-      "year_from": 2014
-    },
-    {
-      "make": "Hyundai",
-      "models": [
-        "Accent"
-      ],
-      "year_from": 2011
+      "year_from": null,
+      "year_to": null,
+      "price_max": 5000,
+      "note": "з попереднього списку"
     },
     {
       "make": "Peugeot",
       "models": [
         "301"
       ],
-      "year_from": null
+      "year_from": null,
+      "year_to": null,
+      "price_max": 5000,
+      "note": "з попереднього списку"
     },
     {
       "make": "Renault",
       "models": [
-        "Scenic E-Tech",
-        "Megane E-Tech Electric",
-        "Zoe",
-        "Megane Scenic",
-        "Scenic XMOD",
         "Megane",
+        "Megane Scenic",
+        "Scenic",
         "Grand Scenic",
-        "Scenic"
+        "Scenic XMOD",
+        "Megane E-Tech Electric",
+        "Scenic E-Tech"
       ],
-      "year_from": 2010
-    },
-    {
-      "make": "Dacia",
-      "models": [
-        "Logan",
-        "Logan MCV Stepway",
-        "Logan MCV",
-        "Sandero StepWay",
-        "Sandero",
-        "Lodgy",
-        "Dokker Stepway",
-        "Dokker",
-        "Lodgy Stepway",
-        "Duster"
-      ],
-      "year_from": null
-    },
-    {
-      "make": "Renault",
-      "models": [
-        "Sandero StepWay",
-        "Sandero",
-        "Logan",
-        "Logan MCV Stepway",
-        "Logan MCV",
-        "Logan Stepway",
-        "Dokker Stepway",
-        "Duster",
-        "Duster Oroch",
-        "Lodgy",
-        "Dokker"
-      ],
-      "year_from": null
+      "year_from": 2010,
+      "year_to": null,
+      "price_max": 5000,
+      "note": "з попереднього списку"
     }
   ],
   "search_params": {
     "damage": "2",
-    "price_do": "5000",
+    "abroad": "2",
     "currency": "1"
   },
   "keywords": [

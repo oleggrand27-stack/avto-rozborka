@@ -22,6 +22,7 @@ TG = "https://api.telegram.org/bot{token}/{method}"
 
 RIA_KEY = os.environ.get("RIA_API_KEY", "")
 TG_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+DEFAULT_PRICE = 5000  # ціна до, $, якщо в config.json не вказано price_max
 REQUEST_PAUSE = 2  # секунди між запитами, щоб не перевищити ліміт API
 
 
@@ -61,7 +62,7 @@ def resolve_ids(config, state):
     """Перетворює назви марок і моделей на id AUTO.RIA (кешує у state)."""
     cache = state.setdefault("ids", {})
     marks = None
-    pairs = []  # (marka_id, model_id, year_from, label)
+    pairs = []  # (marka_id, model_id, year_from, year_to, price_max, label)
     for s in config["searches"]:
         mk = s["make"]
         if mk not in cache:
@@ -79,22 +80,31 @@ def resolve_ids(config, state):
             if model_id is None:
                 print(f"! Модель не знайдено на AUTO.RIA: {mk} {model}")
                 continue
-            pairs.append((entry["id"], model_id, s.get("year_from"), f"{mk} {model}"))
+            pairs.append((entry["id"], model_id, s.get("year_from"), s.get("year_to"),
+                          s.get("price_max") or DEFAULT_PRICE, f"{mk} {model}"))
     return pairs
 
 
 def search_all(pairs, extra):
-    """Один запит на всі моделі: нові оголошення першими (order_by=7)."""
-    params = [("category_id", 1), ("countpage", 100), ("order_by", 7)]
-    for i, (marka_id, model_id, year_from, _label) in enumerate(pairs):
-        params += [(f"marka_id[{i}]", marka_id), (f"model_id[{i}]", model_id)]
-        if year_from:
-            params.append((f"s_yers[{i}]", year_from))
-    params += list(extra.items())
-    data = ria("/search", params)
-    sr = data.get("result", {}).get("search_result", {})
-    print(f"Всього знайдено на AUTO.RIA: {sr.get('count')}")
-    return [str(i) for i in sr.get("ids", [])]
+    """Окремий запит для кожної цінової межі (API має лише одну ціну на запит).
+    Повертає {id: ціна_до}, нові оголошення першими (order_by=7)."""
+    found = {}
+    for price in sorted({p[4] for p in pairs}):
+        group = [p for p in pairs if p[4] == price]
+        params = [("category_id", 1), ("countpage", 100), ("order_by", 7)]
+        for i, (marka_id, model_id, year_from, year_to, _price, _label) in enumerate(group):
+            params += [(f"marka_id[{i}]", marka_id), (f"model_id[{i}]", model_id)]
+            if year_from:
+                params.append((f"s_yers[{i}]", year_from))
+            if year_to:
+                params.append((f"po_yers[{i}]", year_to))
+        params += list(extra.items()) + [("price_do", price)]
+        data = ria("/search", params)
+        sr = data.get("result", {}).get("search_result", {})
+        print(f"До ${price}: моделей {len(group)}, знайдено {sr.get('count')}")
+        for i in sr.get("ids", []):
+            found.setdefault(str(i), price)
+    return found
 
 
 def looks_for_parts(info, keywords):
@@ -163,15 +173,15 @@ def main():
         sys.exit("Бот ще не знає ваш чат: відкрийте бота в Telegram і натисніть Start.")
 
     pairs = resolve_ids(config, state)
-    ids = search_all(pairs, extra)
-    new = [i for i in ids if i not in seen]
+    found = search_all(pairs, extra)
+    new = [i for i in found if i not in seen]
     seen.update(new)
     print(f"Нових: {len(new)}")
     sent = 0
     if not first_run:
         for ad_id in reversed(new):  # від старіших до новіших
             link = f"https://auto.ria.com/uk/auto___{ad_id}.html"
-            tg("sendMessage", chat_id=chat_id, text=f"🟩🟩🟩🟩🟩🟩🟩🟩\n🔧 РОЗБІРКА · AUTO.RIA (до $5000)\nНове авто з пошкодженнями\n{link}")
+            tg("sendMessage", chat_id=chat_id, text=f"🟩🟩🟩🟩🟩🟩🟩🟩\n🔧 РОЗБІРКА · AUTO.RIA (до ${found[ad_id]})\nНове авто з пошкодженнями\n{link}")
             sent += 1
 
     state["seen"] = sorted(seen)
