@@ -1,6 +1,6 @@
 {
   "comment": "Моделі для таксі (клас Комфорт, Львів). Ціна в $, роки включно. fuels — дозволене пальне, engine — регулярний вираз для об'єму двигуна.",
-  "pages_per_model": 1,
+  "pages_per_model": 3,
   "pause_between_requests_sec": 2,
   "only_cities": [],
   "notify_price_drops": true,
@@ -270,6 +270,20 @@
         "Електро"
       ],
       "note": "Комфорт не проходить. Перевірити ZE40 і що батарея не в оренді"
+    },
+    {
+      "name": "Volkswagen Polo",
+      "brand_id": 84,
+      "model_ids": [
+        789
+      ],
+      "year_from": 2017,
+      "price_max": 9000,
+      "fuels": [
+        "Бензин",
+        "Газ"
+      ],
+      "note": "Львів: Комфорт лише в Bolt (з 2017); в Uklon — Стандарт"
     }
   ]
 }
