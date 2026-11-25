@@ -137,7 +137,7 @@ def main():
             if only_keywords and not hits:
                 continue
             checker.tg("sendMessage", chat_id=chat_id,
-                       text=f"🟢 OLX: нові оголошення за пошуком «{query}»" + (f" ({count})" if count else "") + f"\n{url}")
+                       text=f"🔧 РОЗБІРКА · 🟢 OLX: нові оголошення за пошуком «{query}»" + (f" ({count})" if count else "") + f"\n{url}")
             sent += 1
         for ad_id, (title, url) in ads.items():
             if ad_id in seen_ads:
@@ -148,7 +148,7 @@ def main():
             hits = [k for k in keywords if checker.norm(k) in checker.norm(title)]
             if only_keywords and not hits:
                 continue
-            text = f"🟢 OLX: {title or 'оголошення'}\n🔎 {', '.join(hits) or subject}\n{url}"
+            text = f"🔧 РОЗБІРКА · 🟢 OLX: {title or 'оголошення'}\n🔎 {', '.join(hits) or subject}\n{url}"
             checker.tg("sendMessage", chat_id=chat_id, text=text)
             sent += 1
     imap.logout()

@@ -129,7 +129,7 @@ def notify(chat_id, info, label, hits):
     if link and not link.startswith("http"):
         link = "https://auto.ria.com/uk" + link
     lines = [
-        f"🚗 {info.get('title') or label} {ad.get('year', '')}",
+        f"🔧 РОЗБІРКА\n🚗 {info.get('title') or label} {ad.get('year', '')}",
         f"💵 {info.get('USD', '?')} $",
         f"📍 {info.get('locationCityName') or info.get('stateData', {}).get('name', '')}",
         f"🛣 {ad.get('race', '')}",
@@ -171,7 +171,7 @@ def main():
     if not first_run:
         for ad_id in reversed(new):  # від старіших до новіших
             link = f"https://auto.ria.com/uk/auto___{ad_id}.html"
-            tg("sendMessage", chat_id=chat_id, text=f"🚗 Нове авто з пошкодженнями на AUTO.RIA\n{link}")
+            tg("sendMessage", chat_id=chat_id, text=f"🔧 РОЗБІРКА · AUTO.RIA (до $5000)\nНове авто з пошкодженнями\n{link}")
             sent += 1
 
     state["seen"] = sorted(seen)

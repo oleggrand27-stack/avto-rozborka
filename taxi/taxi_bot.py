@@ -187,7 +187,7 @@ def matches(ad, m, only_cities, min_price=0):
 
 def fmt(ad, m, old_price=None):
     d, e = ad["d"], html.escape
-    head = "🚕💸 <b>Таксі: знизили ціну</b>\n" if old_price else "🚕 "
+    head = "🚕 <b>ТАКСІ · ОРЕНДА</b> — 💸 знизили ціну\n" if old_price else "🚕 <b>ТАКСІ · ОРЕНДА</b>\n"
     price = f"<b>${ad['usd']:,}</b>".replace(",", " ")
     if old_price:
         price += f" (було ${old_price:,})".replace(",", " ")

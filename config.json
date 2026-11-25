@@ -116,7 +116,9 @@
     }
   ],
   "search_params": {
-    "damage": "2"
+    "damage": "2",
+    "price_do": "5000",
+    "currency": "1"
   },
   "keywords": [
     "розбір",
