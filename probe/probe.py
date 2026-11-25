@@ -1,20 +1,16 @@
-import re,urllib.request,time
-from collections import Counter
-UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
-def get(u):
-    time.sleep(4)
-    return urllib.request.urlopen(urllib.request.Request("https://auto.ria.com"+u,headers={"User-Agent":UA,"Accept-Language":"uk"}),timeout=40).read().decode("utf-8","replace")
-base="/uk/search/?indexName=auto&categories.main.id=1&brand.id[0]=55&model.id[0]=36565&size=100"
-for e in ["","&abroad=1","&abroad=0","&abroad.not=1","&customs_cleared=1","&customsCleared=1","&custom.not=1","&search_type=3","&search_type[0]=3","&country.import.usa.not=0"]:
-    try:
-        h=get(base+e)
-    except Exception as ex:
-        print("ERR",e,ex); continue
-    m=re.search(r'"count":(\d+)',h)
-    low=h
-    kws={k:low.count(k) for k in ["пригон","Пригон","замовлення","розмитн","Розмитн","США","abroad","Abroad","inUkraine","Не в Україні","customs"]}
-    print("COUNT",e,m.group(1) if m else "?",kws)
-    if e=="":
-        for k in ["пригон","Пригон","замовлення","Розмитн","розмитн","abroad"]:
-            for mm in list(re.finditer(k,h))[:3]:
-                print(k,"::",h[max(0,mm.start()-250):mm.start()+200].replace("\n"," "))
+import json,os,time,urllib.request,urllib.parse
+K=os.environ["RIA_API_KEY"]
+def s(extra):
+    time.sleep(2)
+    p=[("api_key",K),("category_id",1),("marka_id[0]",55),("model_id[0]",36565),("countpage",100)]+extra
+    d=json.loads(urllib.request.urlopen("https://developers.ria.com/auto/search?"+urllib.parse.urlencode(p),timeout=30).read())
+    sr=d["result"]["search_result"]; return sr["count"], sr["ids"][:100]
+base=s([])
+print("BASE",base[0])
+for e in [[("abroad",0)],[("abroad",1)],[("abroad",2)],[("custom",0)],[("custom",1)],[("custom",2)],[("damage",2)],[("damage",2),("abroad",2),("custom",1)]]:
+    c,ids=s(e); print("COUNT",e,c)
+c,ids=s([("abroad",1)])
+for i in ids[:3]:
+    time.sleep(2)
+    d=json.loads(urllib.request.urlopen(f"https://developers.ria.com/auto/info?api_key={K}&auto_id={i}",timeout=30).read())
+    print("INFO abroad=1", i, d.get("locationCityName"), d.get("stateData",{}).get("name"), d.get("autoData",{}).get("custom"), str(d)[:300])
