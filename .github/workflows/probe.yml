@@ -1,0 +1,10 @@
+name: probe
+on:
+  push:
+    branches: [probe-skoda]
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python probe/probe.py
